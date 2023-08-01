@@ -1,0 +1,34 @@
+# This is a basic workflow to help you get started with Actions
+name: Get Automation Status on pull request
+# Controls when the workflow will run
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.results }}
+    name: Automation Status
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Get Automation status action step
+        id: step1
+        uses: itential/itential-automation-get-status@0.0.1
+        with:
+          #github_token: ${{secrets.GITHUB_TOKEN}} # include only if user requires a GitHub Token
+          itential_host_url: ${{secrets.ITENTIAL_HOST_URL}}
+          auth_token: ${{secrets.AUTH_TOKEN}}
+          auth_username: ${{secrets.AUTH_USERNAME}}
+          auth_password: ${{secrets.AUTH_PASSWORD}}
+          auth_client_id: ${{secrets.AUTH_CLIENT_ID}}
+          auth_client_secret: ${{secrets.AUTH_CLIENT_SECRET}}
+          automation_id: ${{secrets.AUTOMATION_ID}}
+          no_of_attempts: 10
+          time_interval: 15
+      - name: Get output
+        run: echo "${{steps.step1.outputs.results}}"
