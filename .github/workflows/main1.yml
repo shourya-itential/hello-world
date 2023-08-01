@@ -28,7 +28,7 @@ jobs:
           auth_client_id: ${{secrets.AUTH_CLIENT_ID}}
           auth_client_secret: ${{secrets.AUTH_CLIENT_SECRET}}
           automation_id: ${{secrets.AUTOMATION_ID}}
-          no_of_attempts: 10
+          no_of_attempts: 1
           time_interval: 15
       - name: Get output
         run: echo "${{steps.step1.outputs.results}}"
