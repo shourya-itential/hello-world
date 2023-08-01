@@ -1,0 +1,36 @@
+# This is a basic workflow to help you get started with Actions
+name: Start automation on pull request
+# Controls when the workflow will run
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      #step1 output
+      output1: ${{ steps.step1.outputs.results }}
+    name: Automation start
+    steps:
+      # To use this repository's private action, you must checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Itential Automation Start action step
+        id: step1
+        uses: itential/itential-automation-start@0.0.1
+        with:
+          #github_token: ${{secrets.GITHUB_TOKEN}} # include only if user requires a GitHub Token
+          itential_host_url: ${{secrets.ITENTIAL_HOST_URL}}
+          auth_token: ${{secrets.AUTH_TOKEN}}
+          auth_username: ${{secrets.AUTH_USERNAME}}
+          auth_password: ${{secrets.AUTH_PASSWORD}}
+          auth_client_id: ${{secrets.AUTH_CLIENT_ID}}
+          auth_client_secret: ${{secrets.AUTH_CLIENT_SECRET}}
+          time_interval: 1
+          no_of_attempts: 200
+          api_endpoint: ${{secrets.API_ENDPOINT}}
+          api_endpoint_body: ${{secrets.API_ENDPOINT_BODY}}
+          automation_status: 1
+      - name: Get output
+        run: echo "${{steps.step1.outputs.results}}"
